@@ -65,9 +65,33 @@ L'obiettivo di tale documento è di rispondere a tre domande essenziali: definir
 
 \newpage
 \section{Introduzione}
+In questo elaborato si prenderà in considerazione uno dei problemi più famosi che vengono sottoposti alle intelligenze artificiali: il riconoscimento di numeri manoscritti.
+La simulazione chè verrà presentata si baserà sul dataset \textit{MNIST}, il quale contiene 70.000 immagini, con relative etichette, di cifre comprese tra 0 e 9 scritte a mano.\\
+Per risolvere il problema sopra descritto, utilizzeremo una variante convoluzionale di un'architettura di \textit{deep learning} formata da un \textit{MLP --- Multilayer Perceptron} composta da vari strati nascosti.
 
 \newpage
 \section{Costruzione della Rete Neurale}
+Per quanto riguarda la variante "classica" della \textit{MLP} è stata utilizzata la libreria \textit{MLPClassifier} di \textit{sklearn.neural\_network}. Questo percettrone è formato da 500 strati nascosti, ognuno dei quali è composto da 500 neuroni. Il ciclo di apprendimento viene ripetuto per 15 volte, in modo da poter addestrare sufficientemente l'\textit{IA} rimanendo in tempi accettabili (circa 4 minuti).\\
+Al termine dell'addestramento, l'accuratezza della rete è stimata intorno a \(0.9779\). Di seguito la curva di errore durante l'addestramento:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.50\textwidth]{CurvaApprendimentoClassica}
+    \caption{Curva di Apprendimento}
+\end{figure}
+
+Dopo aver fornito alla rete anche il \textit{test pattern} per la predizione, la matrice di confusione risulta essere:
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.50\textwidth]{MatriceConfusioneClassica}
+    \caption{Matrice di Confusione}
+\end{figure}
+
+Attestando quindi una accuratezza di \(0.9811\) avendo riconosciuto 9811 valori su un totale di 10000.
+
+
+\subsection{Variante Convoluzionale}
 
 \newpage
 \section{Simulazione sul Dataset Fornito}
