@@ -70,7 +70,7 @@ La simulazione chè verrà presentata si baserà sul dataset \textit{MNIST}, il 
 Per risolvere il problema sopra descritto, utilizzeremo una variante convoluzionale di un'architettura di \textit{deep learning} formata da un \textit{MLP --- Multilayer Perceptron} composta da vari strati nascosti.
 
 \newpage
-\section{Costruzione della Rete Neurale}
+\section{Costruzione della Rete Neurale e Test}
 Per quanto riguarda la variante "classica" della \textit{MLP} è stata utilizzata la libreria \textit{MLPClassifier} di \textit{sklearn.neural\_network}. Questo percettrone è formato da 500 strati nascosti, ognuno dei quali è composto da 500 neuroni. Il ciclo di apprendimento viene ripetuto per 15 volte, in modo da poter addestrare sufficientemente l'\textit{IA} rimanendo in tempi accettabili (circa 4 minuti).\\
 Al termine dell'addestramento, l'accuratezza della rete è stimata intorno a \(0.9779\). Di seguito la curva di errore durante l'addestramento:
 
@@ -92,9 +92,24 @@ Attestando quindi una accuratezza di \(0.9811\) avendo riconosciuto 9811 valori 
 
 
 \subsection{Variante Convoluzionale}
+La variante convoluzionale presenta degli strati in cui i neuroni nascosti non sono interamente connessi con lo strato precedente ma hanno campi recettivi locali che servono per codificare una feature specifica (detta anche \textit{kernel} o filtro).\\
+La nostra rete utilizzerà quindi degli strati convoluzionali composti da 32 \textit{kernel} di dimensione \(3*3\).
+Al termine dell'addestramento (sullo stesso dataset fornito alla variante classica), dopo un tempo di circa 5 minuti, l'accuratezza della rete è stimata intorno a \(0.9995\) come mostrato nella figura sotto:
 
-\newpage
-\section{Simulazione sul Dataset Fornito}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.50\textwidth]{CurvaApprendimentoConvoluzionale}
+    \caption{Curva di Apprendimento}
+\end{figure}
+
+Dopo aver fornito alla rete anche il \textit{test pattern} per la predizione, la matrice di confusione risulta essere:
+\begin{figure}
+    \centering
+    \includegraphics[width=0.50\textwidth]{MatriceConfusioneConvoluzionale}
+    \caption{Matrice di Confusione}
+\end{figure}
+
+\subsection{Introduzione di Rumore nel Testing}
 
 \newpage
 \section{Primo Quesito --- Numeri Difficili da Riconoscere}
