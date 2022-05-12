@@ -93,9 +93,18 @@ A seguire, è stata creata una variante convoluzionale di MLP formata da 2 strat
     \item Secondo Strato: 28 filtri e un kernel \(4*4\)
 \end{itemize}
 Entrambi questi strati presentano una funzione di attivazione "\textit{RELU}".\\
+Dopo aver addestrato la rete, la curva di apprendimento risulta essere:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{Curva_Conv.png}
+\end{figure}
+Tramite la funzione di predizione abbiamo potuto constatare che l'accuratezza risulta essere del \(99.91\%\).\\
+Anche in questo caso è stato effettuato il test su vari livelli di rumore e l'accuratezza al variare del rumore risulta essere:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{Rumore_Conv.png}
+\end{figure}
 
-
-\subsection{Introduzione di Rumore nel Testing}
 \subsection{Risultati}
 
 \newpage
