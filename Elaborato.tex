@@ -4,6 +4,7 @@
 \usepackage{graphicx}
 \usepackage{listings}
 \usepackage{xcolor}
+\usepackage{float}
 
 \definecolor{codegreen}{rgb}{0,0.6,0}
 \definecolor{codegray}{rgb}{0.5,0.5,0.5}
@@ -57,7 +58,7 @@
 \begin{abstract}
 Nel presente elaborato verrà implementata una simulazione tramite modelli di reti neurali utilizzando l'ambiente di sviluppo Python.\\
 La simulazione si baserà sul database \textit{MNIST}, riguardante il riconoscimento di numeri manoscritti, fornitoci durante la terza esercitazione pratica.\\
-L'obiettivo di tale documento è di rispondere a tre domande essenziali: definire le cifre più difficili da riconoscere, quantificare la variazione di accuratezza dovuta all'inserimento di rumore nel \textit{training pattern} e la variazione dell'accuratezza di riconoscimento sul \textit{testing pattern} riducendo drasticamente le dimensioni del \textit{training pattern}.    
+Dopo aver introdotto i vari tipi di rete e i loro risultati tramite un breve report, si cercherà rispondere a tre domande essenziali: definire le cifre più difficili da riconoscere, quantificare la variazione di accuratezza dovuta all'inserimento di rumore nel \textit{training pattern} e la variazione dell'accuratezza di riconoscimento sul \textit{testing pattern} riducendo drasticamente le dimensioni del \textit{training pattern}.    
 \end{abstract}
 
 \newpage
@@ -67,13 +68,35 @@ L'obiettivo di tale documento è di rispondere a tre domande essenziali: definir
 \section{Introduzione}
 In questo elaborato si prenderà in considerazione uno dei problemi più famosi che vengono sottoposti alle intelligenze artificiali: il riconoscimento di numeri manoscritti.
 La simulazione chè verrà presentata si baserà sul dataset \textit{MNIST}, il quale contiene 70.000 immagini, con relative etichette, di cifre comprese tra 0 e 9 scritte a mano.\\
-Per risolvere il problema sopra descritto, utilizzeremo una variante convoluzionale di un'architettura di \textit{deep learning} formata da un \textit{MLP --- Multilayer Perceptron} composta da vari strati nascosti.
+Per risolvere il problema sopra descritto, utilizzeremo due Percettroni Multi-Strato: la variante classica e quella convoluzionale.\\
+Per testare entrambe le reti, suddivideremo il dataset in due parti: il training set composta da 60.000 immagini e il test set composto da 10.000 immagini. Dopo l'addestramento della rete, si procederà con la predizione, per poi passare ad una seconda predizione nel quale il test set conterrà del rumore crescente.
 
 \newpage
 \section{Costruzione della Rete Neurale e Test --- Breve Report}
 \subsection{Multi Layer Perceptron --- Versione Classica}
+Come prima rete, è stata creata un Percettrone Multi-Strato composto da 500 strati nascosti, ognuno dei quali formato da 500 neuroni. Effettuato l'addestramento su un massimo di 15 cicli e tramite funzione di attivazione "\textit{RELU}", la curva di apprendimento appare come sotto riportato:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{Curva_MLP}
+\end{figure}
+Tramite la funzione \textit{score()}, si calcola che l'accuratezza della rete è fissata a \(97.79\%\).
+Per completezza, è stato anche effettuato una predizione sullo stesso test set dove sono stati inseriti, in diversi step, 10 livelli di rumore compresi nell'intervallo \([0.1 , 1.0]\). Di seguito la variazione dell'errore all'aumentare del rumore:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{Rumore_MLP.png}
+\end{figure}
+
 \subsection{Multi Layer Perceptron --- Versione Convoluzionale}
+A seguire, è stata creata una variante convoluzionale di MLP formata da 2 strati convoluzionali così definiti:
+\begin{itemize}
+    \item Primo Strato: 18 filtri e un kernel \(3*3\)
+    \item Secondo Strato: 28 filtri e un kernel \(4*4\)
+\end{itemize}
+Entrambi questi strati presentano una funzione di attivazione "\textit{RELU}".\\
+
+
 \subsection{Introduzione di Rumore nel Testing}
+\subsection{Risultati}
 
 \newpage
 \section{Primo Quesito --- Numeri Difficili da Riconoscere}
