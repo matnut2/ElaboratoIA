@@ -74,11 +74,12 @@ Per testare entrambe le reti, suddivideremo il dataset in due parti: il training
 \newpage
 \section{Costruzione della Rete Neurale e Test --- Breve Report}
 \subsection{Multi Layer Perceptron --- Versione Classica}
-Come prima rete, è stata creata un Percettrone Multi-Strato composto da 500 strati nascosti, ognuno dei quali formato da 500 neuroni. Effettuato l'addestramento su un massimo di 15 cicli e tramite funzione di attivazione "\textit{RELU}", la curva di apprendimento appare come sotto riportato:
+Come prima rete, è stata creata un Percettrone Multi-Strato composto da 2 strati nascosti, ognuno dei quali formato da 500 neuroni. Effettuato l'addestramento su un massimo di 15 cicli e tramite funzione di attivazione "\textit{RELU}", la curva di apprendimento appare come sotto riportato:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.50\textwidth]{Curva_MLP}
 \end{figure}
+Da notare che con soli 15 cicli di addestramento, si riceve un warning che ci avvisa del fatto che la rete non è riuscita a convergere. Probabilmente con un maggior numero di cicli, la rete potrebbe convergere.
 Tramite la funzione \textit{score()}, si calcola che l'accuratezza della rete è fissata a \(97.79\%\).
 Per completezza, è stato anche effettuato una predizione sullo stesso test set dove sono stati inseriti, in diversi step, 10 livelli di rumore compresi nell'intervallo \([0.1 , 1.0]\). Di seguito la variazione dell'errore all'aumentare del rumore:
 \begin{figure}[H]
@@ -99,18 +100,121 @@ Dopo aver addestrato la rete, la curva di apprendimento risulta essere:
     \includegraphics[width=0.50\textwidth]{Curva_Conv.png}
 \end{figure}
 Tramite la funzione di predizione abbiamo potuto constatare che l'accuratezza risulta essere del \(99.91\%\).\\
-Anche in questo caso è stato effettuato il test su vari livelli di rumore e l'accuratezza al variare del rumore risulta essere:
+Anche in questo caso è stato effettuato il test su vari livelli di rumore e l'accuratezza al variare del rumore (in confronto con la versione classica) risulta essere:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.50\textwidth]{Rumore_Conv.png}
 \end{figure}
 
+Essendo normalmente le MLP Convoluzionali maggiormente adatta per la classificazione di immagini, si è provato ad aggiungere del rumore anche durante l'addestramento della rete.\\
+L'addestramento verrà effettuato su un livello di rumore pari a \(0.5\) e poi verrà testata l'affidabilità sul test set con 10 livelli di rumore.\\
+Dal test, emerge quanto successivamente mostrato:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{Rumore_Conv_Add.png}
+\end{figure}
+
 \subsection{Risultati}
+Dai precedenti test, si può concludere che, su questo tipo di dataset e con i parametri preimpostati, su di un addestramento di 15 cicli, le due varianti di MLP si assomigliano, non mostrando grandi differenze nell'accuratezza sul test set. I risultati migliori si ottengono addestrando la variante convoluzionale con del rumore.
 
 \newpage
 \section{Primo Quesito --- Numeri Difficili da Riconoscere}
 \subsection{Visualizzazione di Pattern Erronei}
+Per poter visualizzare al meglio le previsioni sbagliate, utilizzeremo tre liste di supporto:
+\begin{itemize}
+    \item sbagliate[]: contiene le "immagini" originali
+    \item previsto[]: contiene il valore previsto dalla rete
+    \item target[]: contiene il valore target associato al valore originario
+\end{itemize}
+
+Inizialmente verrà utilizzata una MLP classica, a seguire saranno mostrati anche i risultati della variante convoluzionale.
+Di seguito i risultati:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{ErrateClassica.png}
+\end{figure}
+
+Nella simulazione risulta che il numero che viene classificato più volte erroneamente è \(8\), che conta un numero di classificazioni errate di \(47\). A seguire il numero \(7\) e poi il \(4\). I numeri che invece vengono classificati in modo sbagliato poche volte sono \(0\), \(1\) e \(9\).\\
+Di seguito alcuni esempi di numeri \(8\) che sono stati classificati in modo erroneo:
+\begin{figure}[H]
+    \centering
+    \caption{Numero Previsto: 0}
+    \includegraphics[width=0.50\textwidth]{otto1.png}
+\end{figure} 
+\begin{figure}[H]
+    \centering
+    \caption{Numero Previsto: 4}
+    \includegraphics[width=0.50\textwidth]{otto2.png}
+\end{figure} 
+\begin{figure}[H]
+    \centering
+    \caption{Numero Previsto: 7}
+    \includegraphics[width=0.50\textwidth]{otto3.png}
+\end{figure} 
+\begin{figure}[H]
+    \centering
+    \caption{Numero Previsto: 4}
+    \includegraphics[width=0.50\textwidth]{otto4.png}
+\end{figure} 
+\begin{figure}[H]
+    \centering
+    \caption{Numero Previsto: 9}
+    \includegraphics[width=0.50\textwidth]{otto5.png}
+\end{figure} 
+
+Per quanto riguarda la variante convoluzionale, si è utilizzato lo stesso metodo sopra descritto per l'estrazione dei valori classificati erroneamente e i risultati sono stati i seguenti:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{ErrateConv.png}
+\end{figure}
+A differenza di quanto visto prima, i numeri che vengono mal classificati per la maggiore sono i \(9\) che contano un numero di classificazioni errate pari a 22. Da notare come il numero di classificazioni errate sia molto minore rispetto alla variante classica.\\
+Di seguito alcuni esempi di \(9\) classificati erroneamente:
+
+\begin{figure}[H]
+    \centering
+    \caption{Numero Previsto: 5}
+    \includegraphics[width=0.50\textwidth]{nove1.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \caption{Numero Previsto: 7}
+    \includegraphics[width=0.50\textwidth]{nove2.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \caption{Numero Previsto: 3}
+    \includegraphics[width=0.50\textwidth]{nove3.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \caption{Numero Previsto: 1}
+    \includegraphics[width=0.50\textwidth]{nove4.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \caption{Numero Previsto: 1}
+    \includegraphics[width=0.50\textwidth]{nove5.png}
+\end{figure}
+
 \subsection{Aggiunta di Rumore in Pattern Corretti}
+Per procedere con il quesito, prima di aggiungere del rumore, creiamo due nuove liste che conterranno le immagini e i target delle immagini che la rete ha classificato correttamente.\\
+Il test è stato eseguito rumore crescente. La rete sarà considerata "affidabile" sino a quando il rateo di \textit{true positive} sarà maggiore del \(75\%\).\\
+Per quanto riguarda la variante classica, la variazione dell'accuratezza risulta essere:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{TPClassica.png}    
+\end{figure}
+In linea con quanto precedentemente detto, la rete sarà considerabile come affidabile finché il rumore sarà compreso tra i valori \([0.0, 0.3]\), estremi compresi.\\
+
+Per quanto riguarda la variante convoluzionale, il risultato risulta essere:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.50\textwidth]{TPConv.png}
+\end{figure}
+
+Sorprendetemente, il livello di accuratezza rimane stabile intorno al \(0.9822\), per cui la rete rimarrà affidabile per tutti i valori di rumore compresi tra \([0.0, 1.0]\).\\
+
+
 \subsection{Visualizzazione di Pattern Erronei con Aggiunta di Rumore}
 
 \newpage
