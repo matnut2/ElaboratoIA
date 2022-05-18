@@ -205,6 +205,36 @@ Per quanto riguarda la variante classica, la variazione dell'accuratezza risulta
     \includegraphics[width=0.50\textwidth]{TPClassica.png}    
 \end{figure}
 In linea con quanto precedentemente detto, la rete sarà considerabile come affidabile finché il rumore sarà compreso tra i valori \([0.0, 0.3]\), estremi compresi.\\
+Di seguito alcuni esempi di valori classificati in modo errato:
+\begin{figure}[H]
+    \centering
+    \caption{Target: 7 - Previsto: 3}
+    \includegraphics[width=0.5\textwidth]{ErrClass1.png}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Target: 0 - Previsto: 5}
+    \includegraphics[width=0.5\textwidth]{ErrClass2.png}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Target: 6 - Previsto: 5}
+    \includegraphics[width=0.5\textwidth]{ErrClass3.png}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Target: 1 - Previsto: 2}
+    \includegraphics[width=0.5\textwidth]{ErrClass4.png}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Target: 1 - Previsto: 5}
+    \includegraphics[width=0.5\textwidth]{ErrClass5.png}
+\end{figure}
 
 Per quanto riguarda la variante convoluzionale, il risultato risulta essere:
 \begin{figure}[H]
@@ -213,12 +243,41 @@ Per quanto riguarda la variante convoluzionale, il risultato risulta essere:
 \end{figure}
 
 Sorprendetemente, il livello di accuratezza rimane stabile intorno al \(0.9822\), per cui la rete rimarrà affidabile per tutti i valori di rumore compresi tra \([0.0, 1.0]\).\\
+Di seguito alcuni esempi di valori classificati erroneamente:
+\begin{figure}[H]
+    \centering
+    \caption{Target: 3 - Previsto: 9}
+    \includegraphics[width=0.5\textwidth]{ErrConv1.png}
+\end{figure}
 
+\begin{figure}[H]
+    \centering
+    \caption{Target: 0 - Previsto: 3}
+    \includegraphics[width=0.5\textwidth]{ErrConv2.png}
+\end{figure}
 
-\subsection{Visualizzazione di Pattern Erronei con Aggiunta di Rumore}
+\begin{figure}[H]
+    \centering
+    \caption{Target: 1 - Previsto: 2}
+    \includegraphics[width=0.5\textwidth]{ErrConv3.png}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Target: 0 - Previsto: 2}
+    \includegraphics[width=0.5\textwidth]{ErrConv4.png}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \caption{Target: 8 - Previsto: 9}
+    \includegraphics[width=0.5\textwidth]{ErrConv5.png}
+\end{figure}
 
 \newpage
 \section{Secondo Quesito --- Variazione dell'Accuratezza su Addestramento Rumoroso}
+\paragraph{Warning:} Dato che nella sezione saranno definite molte MLP, onde evitare tempi di attesa troppo lunghi, le iterazioni massime sono state ridotte da 15 a 5. La necessità di creare nuove MLP è data dal fatto che il sovrapporsi di addestramenti sulla stessa rete potrebbe influire positivamente sulla predizione e creare di conseguenza dei falsi positivi dato che non si saprà quale degli addestramenti ha massimizzato la resa.
+
 \subsection{Accuratezza su di un Pattern di Test dopo Addestramento Rumoroso}
 \subsection{Definizione di un Valore di Rumorosità Ottimale}
 
