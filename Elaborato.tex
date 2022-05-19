@@ -69,21 +69,26 @@ Dopo aver introdotto i vari tipi di rete e i loro risultati tramite un breve rep
 \newpage
 \section{Introduzione}
 In questo elaborato si prenderà in considerazione uno dei problemi più famosi che vengono sottoposti alle intelligenze artificiali: il riconoscimento di numeri manoscritti.
-La simulazione chè verrà presentata si baserà sul dataset \textit{MNIST}, il quale contiene 70.000 immagini, con relative etichette, di cifre comprese tra 0 e 9 scritte a mano.\\
+La simulazione chè verrà presentata si baserà sul dataset \href{http://yann.lecun.com/exdb/mnist/}{\textit{MNIST}}, il quale contiene 70.000 immagini, con relative etichette, di cifre comprese tra 0 e 9 scritte a mano.\\
 Per risolvere il problema sopra descritto, utilizzeremo due Percettroni Multi-Strato: la variante classica e quella convoluzionale.\\
-Per testare entrambe le reti, suddivideremo il dataset in due parti: il training set composta da 60.000 immagini e il test set composto da 10.000 immagini. Dopo l'addestramento della rete, si procederà con la predizione, per poi passare ad una seconda predizione nel quale il test set conterrà del rumore crescente.
+Per testare entrambe le reti, suddivideremo il dataset in due parti: il training set composta da 60.000 immagini e il test set composto da 10.000 immagini. Dopo l'addestramento della rete, si procederà con la predizione, per poi passare ad una seconda predizione nel quale il test set conterrà del rumore crescente.\\
+Per lo sviluppo di questa simulazione, sono stati creati due notebook su \href{https://colab.research.google.com/?utm_source=scs-index}{Google Colaboratory}:
+\begin{itemize}
+    \item \href{https://colab.research.google.com/drive/1e4vY_9wn6-ugL5NivZc0RBluGdfWqTUM?usp=sharing}{NoteBook per il confronto approfondito tra MLP}
+    \item \href{https://colab.research.google.com/drive/1v2dkWKelr-q5CTpsDUDqp55PUqiId64F?usp=sharing}{NoteBook per la risoluzione dei quesiti}
+\end{itemize}
 
 \newpage
 \section{Costruzione della Rete Neurale e Test --- Breve Report}
 \subsection{Multi Layer Perceptron --- Versione Classica}
-Come prima rete, è stata creata un Percettrone Multi-Strato composto da 2 strati nascosti, ognuno dei quali formato da 500 neuroni. Effettuato l'addestramento su un massimo di 15 cicli e tramite funzione di attivazione "\textit{RELU}", la curva di apprendimento appare come sotto riportato:
+Come prima rete, è stata creata un Percettrone Multi-Strato composto da 2 strati nascosti, ognuno dei quali formato da 500 neuroni. Effettuato l'addestramento su un massimo di 15 cicli e tramite funzione di attivazione \href{https://it.wikipedia.org/wiki/Rettificatore_(reti_neurali)}{"\textit{RELU}"}, la curva di apprendimento appare come sotto riportato:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.50\textwidth]{Curva_MLP}
 \end{figure}
 Da notare che con soli 15 cicli di addestramento, si riceve un warning che ci avvisa del fatto che la rete non è riuscita a convergere. Probabilmente con un maggior numero di cicli, la rete potrebbe convergere.
 Tramite la funzione \textit{score()}, si calcola che l'accuratezza della rete è fissata a \(97.79\%\).
-Per completezza, è stato anche effettuato una predizione sullo stesso test set dove sono stati inseriti, in diversi step, 10 livelli di rumore compresi nell'intervallo \([0.1 , 1.0]\). Di seguito la variazione dell'errore all'aumentare del rumore:
+Per completezza, è stato anche effettuato una predizione sullo stesso test set dove sono stati inseriti, in diversi step, 10 \href{https://it.wikipedia.org/wiki/Rumore_gaussiano}{livelli di rumore} compresi nell'intervallo \([0.1 , 1.0]\). Di seguito la variazione dell'errore all'aumentare del rumore:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.50\textwidth]{Rumore_MLP.png}
@@ -383,9 +388,48 @@ Di conseguenza, i due rumori che massimizzano la resa della rete sono \(0.1\) e 
 
 \newpage
 \section{Terzo Quesito --- Variazione dell'Accuratezza su Pattern di Addestramento Ridotto}
+\paragraph{Warning: }Dato che i dataset sono estremamente ristretti, si utilizzerà nuovamente un addestramento di 15 cicli.
+\paragraph{Warning: }Per mostrare al meglio la variazione dell'accuratezza al diminuire del set di training, si suddividerà il quesito in 3 parti.
+\\
+Prima di tutto, si divide il training set in 3 parti, una da 30.000 elementi, un altra da 15.000 e l'ultima da 6.000. Da notare che crescendo di dimensione, ogni train set contiene anche tutto il set di addestramento della dimensione precedente. \\
+Come per il quesito 2, verranno create 3 diverse MLP per evitare che l'addestramento multiplo falsifichi i risultati nel test.
 \subsection{50\% del Training Set}
-\subsection{25\% del Training Set}
-\subsection{10\% del Training Set}
+Dopo l'addestramento la curva dell'apprendimento risulta essere
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.5\textwidth]{Set50.png}
+\end{figure}
 
+Procedendo poi con il test, l'accuratezza si attesta intorno al \(0.9773\) con relativa matrice di confusione:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.5\textwidth]{Matrix50.png}
+\end{figure}
+
+\subsection{25\% del Training Set}
+Dopo l'addestramento la curva dell'apprendimento risulta essere
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.5\textwidth]{Set25.png}
+\end{figure}
+
+Procedendo poi con il test, l'accuratezza si attesta intorno al \(0.9718\) con relativa matrice di confusione:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.5\textwidth]{Matrix25.png}
+\end{figure}
+
+\subsection{10\% del Training Set}
+Dopo l'addestramento la curva dell'apprendimento risulta essere
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.5\textwidth]{Set10.png}
+\end{figure}
+
+Procedendo poi con il test, l'accuratezza si attesta intorno al \(0.9503\) con relativa matrice di confusione:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=.5\textwidth]{Matrix10.png}
+\end{figure}
 
 \end{document}
