@@ -51,7 +51,7 @@
 
 \begin{figure}
     \centering
-    \includegraphics[width=0.50\textwidth]{Logo_Università_Padova}
+    \includegraphics[width=0.60\textwidth]{Logo_Università_Padova}
 \end{figure}
 
 \maketitle
@@ -71,8 +71,8 @@ Dopo aver introdotto i vari tipi di rete e i loro risultati tramite un breve rep
 In questo elaborato si prenderà in considerazione uno dei problemi più famosi che vengono sottoposti alle intelligenze artificiali: il riconoscimento di numeri manoscritti.
 La simulazione chè verrà presentata si baserà sul dataset \href{http://yann.lecun.com/exdb/mnist/}{\textit{MNIST}}, il quale contiene 70.000 immagini, con relative etichette, di cifre comprese tra 0 e 9 scritte a mano.\\
 Per risolvere il problema sopra descritto, utilizzeremo due Percettroni Multi-Strato: la variante classica e quella convoluzionale.\\
-Inizialmente verranno create diverse versioni con diversi numeri di strati nascosti e diversi numeri di neuroni per strato, si procederà poi con la creazione di altrettanti percettroni convoluzionali per poi concludere con il confronto tra le varie reti create per capire quali siano le più performanti. A seguire si risponderà ai tre quesiti sopra descritti.
-Per lo sviluppo di questa simulazione, sono stati creati due notebook su \href{https://colab.research.google.com/?utm_source=scs-index}{Google Colaboratory}:
+Inizialmente verranno create diverse versioni con diversi numeri di strati nascosti e diversi numeri di neuroni per strato, si procederà poi con la creazione di altrettanti percettroni convoluzionali per poi concludere con il confronto tra le varie reti create per capire quali siano le più performanti. A seguire si risponderà ai tre quesiti sopra citati.
+Per lo sviluppo di questa simulazione, sono stati creati due notebook su \href{https://colab.research.google.com/?utm_source=scs-index}{Google Colaboratory}, accessibili in visualizzazione per chiunque visiti i link sottostanti:
 \begin{itemize}
     \item \href{https://colab.research.google.com/drive/1e4vY_9wn6-ugL5NivZc0RBluGdfWqTUM?usp=sharing}{NoteBook per il confronto approfondito tra MLP}
     \item \href{https://colab.research.google.com/drive/1v2dkWKelr-q5CTpsDUDqp55PUqiId64F?usp=sharing}{NoteBook per la risoluzione dei quesiti}
@@ -80,9 +80,9 @@ Per lo sviluppo di questa simulazione, sono stati creati due notebook su \href{h
 
 \newpage
 \section{Analisi e Report --- Performance delle Reti}
-Prima di addentrarsi nei questionari, si proverà ad analizzare varie MLP per capire quali possano essere le più performanti per il riconoscimento dei numeri.\\
+Prima di addentrarsi nei quesiti, si proverà ad analizzare varie MLP per capire quali possano essere le più performanti per il riconoscimento dei numeri.\\
 \subsection{Inizializzazione delle MLP --- Versione Classica}
-Come prima cosa, sono state create 10 MLP classiche, sotto meglio descritte:
+Come prima cosa, sono state create 10 MLP classiche utilizzando la libreria \href{https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier}{\textit{sklearn.neural\_network}}, sotto meglio descritte:
 \begin{itemize}
     \item \textbf{MLP2HL500}: MLP composta da 2 strati nascosti, ognuno dei quali da 500 neuroni;
     \item \textbf{MLP3HL500}: MLP composta da 3 strati nascosti, ognuno dei quali da 500 neuroni;
@@ -95,8 +95,9 @@ Come prima cosa, sono state create 10 MLP classiche, sotto meglio descritte:
     \item \textbf{MLP3HL1000\_500\_250}: MLP composta da 3 strati nascosti, contenenti rispettivamente 1000, 500 e 250 neuroni; 
     \item \textbf{MLP5HL100\_250\_500\_500\_500}: MLP composta da 5 strati nascosti, di cui i primi 2 strati contenenti rispettivamente 100 e 250 neuroni, mentre gli ultimi 3 saranno formati da 500 neuroni 
 \end{itemize}
-
-Queste MLP sono state addestrate per un periodo di 5 cicli sul training set. Nessuna di queste è riuscita a convergere, per questo ci viene restituito un \textit{warning}. Di seguito la curva di apprendimento delle varie reti messe a confronto, oltre all'accuratezza prevista:
+Tutte queste varianti utilizzano una funzione di attivazione "\href{https://it.wikipedia.org/wiki/Rettificatore_(reti_neurali)}{\textit{RELU}}", un risolutore basato su di un ottimizzatore \textit{gradient-based} denominato "\href{https://arxiv.org/abs/1412.6980}{\textit{adam}}" e un \textit{learning rate} costante di valore \(0.001\). \\
+Queste MLP sono state addestrate per un periodo di 5 cicli sul training set. Nessuna di queste è riuscita a convergere, per questo ci viene restituito un \textit{warning}. \\
+Di seguito la curva di apprendimento delle varie reti messe a confronto, oltre all'accuratezza prevista:
 \begin{figure}[H]
     \centering 
     \includegraphics[width=\textwidth]{ConfrontoClassica.png}
@@ -106,14 +107,14 @@ Queste MLP sono state addestrate per un periodo di 5 cicli sul training set. Nes
     \includegraphics[width=0.2\textwidth]{AccuratezzaClassica.png}
 \end{figure}
 
-A seguire è stato effettuato anche un test su tutte le reti e su del rumore crescente per definire la resistenza al rumore. Di seguito i risultati:
+A seguire è stato effettuato anche un test delle reti su del rumore crescente nell'intervallo \([0.1 , 1.0]\), inserito tramite una funzione che aggiunge \href{https://it.wikipedia.org/wiki/Rumore_gaussiano}{rumore gaussiano}. Di seguito i risultati:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{RisultatiRumoreClassica.png}
 \end{figure}
 
 \subsection{Inizializzazione delle MLP --- Versione Convoluzionale}
-Si passa poi alle MLP convoluzionali. Di queste ne sono state create 6 diverse versioni, di seguito descrite:
+Si passa poi alle MLP convoluzionali, generate tramite il pacchetto \href{https://www.tensorflow.org/api_docs/python/tf/keras/Model}{\textit{tensorflow.keras}}. Di queste ne sono state create 6 diverse versioni, di seguito descritte:
 \begin{itemize}
     \item \textbf{Conv2\_1428}: MLP composta da 2 strati convoluzionali rispettivamente con kernel \(3*3\) e \(4*4\), formata da 14 e 28 filtri, il tutto seguito da uno strato di pooling e infine da uno stato \textit{dense} di 10 unità;
     \item \textbf{Conv3\_142822}: MLP composta da 3 strati convoluzionali rispettivamente con kernel \(3*3\), \(4*4\) e \(4*4\), formata da 14, 28 e 22 filtri, il tutto seguito da uno strato di pooling e infine da uno stato \textit{dense} di 10 unità;
@@ -122,8 +123,8 @@ Si passa poi alle MLP convoluzionali. Di queste ne sono state create 6 diverse v
     \item \textbf{Conv5\_1428405260}: MLP composta da 5 strati convoluzionali rispettivamente con kernel \(3*3\), \(4*4\), \(5*5\), \(6*6\) e \(7*7\), formata da 14, 28, 40, 52 e 60 filtri, il tutto seguito da uno strato di pooling e infine da uno stato \textit{dense} di 10 unità;
     \item \textbf{Conv1\_28}: MLP composta da un singolo strato convoluzionale formato da un kernel \(4*4\) da 28 filtri, seguito dallo strato di pooling e infine da uno strato \textit{dense} di 10 unità
 \end{itemize}
-
-Anche in questo caso, dato l'addestramento di 5 cicli, le reti non convergono. Di seguito la curva di apprendimento e l'accuratezza prevista delle reti:
+Come descritto per la versione classica, anche la variante convoluzionale utilizza l'ottimizzatore "\href{https://arxiv.org/abs/1412.6980}{\textit{adam}}".\\
+Analogamente alla versione classica, dato l'addestramento di 5 cicli, le reti non convergono. Di seguito la curva di apprendimento e l'accuratezza prevista delle reti:
 \begin{figure}[H]
     \centering 
     \includegraphics[width=.9\textwidth]{ConfrontoConvoluzionale.png}
@@ -146,6 +147,19 @@ Di seguito viene riportato il grafico che rappresenta il confronto tra tutte le 
     \centering
     \includegraphics[width=\textwidth]{ConfrontoTotale.png}
 \end{figure}
+Analizzando i dati in nostro possesso, si può notare che, per le reti classiche, il numero ideale di strati nascosti deve essere compreso nell'intervallo \([2, 5]\) e che il numero di neuroni deve aggirarsi nell'intervallo \([250 , 500]\).
+Di conseguenza, possiamo affermare che le reti migliori siano:
+\begin{itemize}
+    \item \textbf{MLP5HL500} \(>\) accuratezza \(0.9798\)
+    \item \textbf{MLP2HL250\_500} \(>\) accuratezza \(0.9787\)
+    \item \textbf{MLP2HL500 \& MLP3HL500} \(>\) accuratezza \(0.9779\)
+\end{itemize} 
+
+Per quanto riguarda invece le MLP convoluzionali, c'è da notare che globalmente surclassano l'accuratezza delle versioni classiche. Si sottolinea inoltre che le reti migliori sono risultate quelle con 5 strati convoluzionali e un numero di filtri e dimensione dei kernel relativamente crescenti. Di fatto le due migliori MLP risultano essere:
+\begin{itemize}
+    \item \textbf{Conv5\_1428405260} \(>\) accuratezza \(0.9900\)
+    \item \textbf{Conv5\_1428223050} \(>\) accuratezza \(0.9890\)
+\end{itemize}
 
 \newpage
 \section{Primo Quesito --- Numeri Difficili da Riconoscere}
