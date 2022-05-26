@@ -71,7 +71,7 @@ Dopo aver introdotto i vari tipi di rete e i loro risultati tramite un breve rep
 In questo elaborato si prenderà in considerazione uno dei problemi più famosi che vengono sottoposti alle intelligenze artificiali: il riconoscimento di numeri manoscritti.
 La simulazione chè verrà presentata si baserà sul dataset \href{http://yann.lecun.com/exdb/mnist/}{\textit{MNIST}}, il quale contiene 70.000 immagini, con relative etichette, di cifre comprese tra 0 e 9 scritte a mano.\\
 Per risolvere il problema sopra descritto, utilizzeremo due Percettroni Multi-Strato: la variante classica e quella convoluzionale.\\
-Per testare entrambe le reti, suddivideremo il dataset in due parti: il training set composta da 60.000 immagini e il test set composto da 10.000 immagini. Dopo l'addestramento della rete, si procederà con la predizione, per poi passare ad una seconda predizione nel quale il test set conterrà del rumore crescente.\\
+Inizialmente verranno create diverse versioni con diversi numeri di strati nascosti e diversi numeri di neuroni per strato, si procederà poi con la creazione di altrettanti percettroni convoluzionali per poi concludere con il confronto tra le varie reti create per capire quali siano le più performanti. A seguire si risponderà ai tre quesiti sopra descritti.
 Per lo sviluppo di questa simulazione, sono stati creati due notebook su \href{https://colab.research.google.com/?utm_source=scs-index}{Google Colaboratory}:
 \begin{itemize}
     \item \href{https://colab.research.google.com/drive/1e4vY_9wn6-ugL5NivZc0RBluGdfWqTUM?usp=sharing}{NoteBook per il confronto approfondito tra MLP}
@@ -79,50 +79,73 @@ Per lo sviluppo di questa simulazione, sono stati creati due notebook su \href{h
 \end{itemize}
 
 \newpage
-\section{Costruzione della Rete Neurale e Test --- Breve Report}
-\subsection{Multi Layer Perceptron --- Versione Classica}
-Come prima rete, è stata creata un Percettrone Multi-Strato composto da 2 strati nascosti, ognuno dei quali formato da 500 neuroni. Effettuato l'addestramento su un massimo di 15 cicli e tramite funzione di attivazione \href{https://it.wikipedia.org/wiki/Rettificatore_(reti_neurali)}{"\textit{RELU}"}, la curva di apprendimento appare come sotto riportato:
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.50\textwidth]{Curva_MLP}
-\end{figure}
-Da notare che con soli 15 cicli di addestramento, si riceve un warning che ci avvisa del fatto che la rete non è riuscita a convergere. Probabilmente con un maggior numero di cicli, la rete potrebbe convergere.
-Tramite la funzione \textit{score()}, si calcola che l'accuratezza della rete è fissata a \(97.79\%\).
-Per completezza, è stato anche effettuato una predizione sullo stesso test set dove sono stati inseriti, in diversi step, 10 \href{https://it.wikipedia.org/wiki/Rumore_gaussiano}{livelli di rumore} compresi nell'intervallo \([0.1 , 1.0]\). Di seguito la variazione dell'errore all'aumentare del rumore:
-\begin{figure}[H]
-    \centering
-    \includegraphics[width=0.50\textwidth]{Rumore_MLP.png}
-\end{figure}
-
-\subsection{Multi Layer Perceptron --- Versione Convoluzionale}
-A seguire, è stata creata una variante convoluzionale di MLP formata da 2 strati convoluzionali così definiti:
+\section{Analisi e Report --- Performance delle Reti}
+Prima di addentrarsi nei questionari, si proverà ad analizzare varie MLP per capire quali possano essere le più performanti per il riconoscimento dei numeri.\\
+\subsection{Inizializzazione delle MLP --- Versione Classica}
+Come prima cosa, sono state create 10 MLP classiche, sotto meglio descritte:
 \begin{itemize}
-    \item Primo Strato: 18 filtri e un kernel \(3*3\)
-    \item Secondo Strato: 28 filtri e un kernel \(4*4\)
+    \item \textbf{MLP2HL500}: MLP composta da 2 strati nascosti, ognuno dei quali da 500 neuroni;
+    \item \textbf{MLP3HL500}: MLP composta da 3 strati nascosti, ognuno dei quali da 500 neuroni;
+    \item \textbf{MLP5HL500}: MLP composta da 5 strati nascosti, ognuno dei quali da 500 neuroni;
+    \item \textbf{MLP2HL100}: MLP composta da 2 strati nascosti, ognuno dei quali da 100 neuroni;
+    \item \textbf{MLP5HL1000}: MLP composta da 5 strati nascosti, ognuno dei quali da 1000 neuroni;
+    \item \textbf{MLP10HL150}: MLP composta da 10 strati nascosti, ognuno dei quali da 150 neuroni; 
+    \item \textbf{MLP2HL250\_500}: MLP composta da 2 strati nascosti, contenenti rispettivamente 250 e 500 neuroni; 
+    \item \textbf{MLP3HL250\_500\_1000}: MLP composta da 3 strati nascosti, contenenti rispettivamente 250, 500 e 1000 neuroni; 
+    \item \textbf{MLP3HL1000\_500\_250}: MLP composta da 3 strati nascosti, contenenti rispettivamente 1000, 500 e 250 neuroni; 
+    \item \textbf{MLP5HL100\_250\_500\_500\_500}: MLP composta da 5 strati nascosti, di cui i primi 2 strati contenenti rispettivamente 100 e 250 neuroni, mentre gli ultimi 3 saranno formati da 500 neuroni 
 \end{itemize}
-Entrambi questi strati presentano una funzione di attivazione "\textit{RELU}".\\
-Dopo aver addestrato la rete, la curva di apprendimento risulta essere:
+
+Queste MLP sono state addestrate per un periodo di 5 cicli sul training set. Nessuna di queste è riuscita a convergere, per questo ci viene restituito un \textit{warning}. Di seguito la curva di apprendimento delle varie reti messe a confronto, oltre all'accuratezza prevista:
 \begin{figure}[H]
-    \centering
-    \includegraphics[width=0.50\textwidth]{Curva_Conv.png}
+    \centering 
+    \includegraphics[width=\textwidth]{ConfrontoClassica.png}
 \end{figure}
-Tramite la funzione di predizione abbiamo potuto constatare che l'accuratezza risulta essere del \(99.91\%\).\\
-Anche in questo caso è stato effettuato il test su vari livelli di rumore e l'accuratezza al variare del rumore (in confronto con la versione classica) risulta essere:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.50\textwidth]{Rumore_Conv.png}
+    \includegraphics[width=0.2\textwidth]{AccuratezzaClassica.png}
 \end{figure}
 
-Essendo normalmente le MLP Convoluzionali maggiormente adatta per la classificazione di immagini, si è provato ad aggiungere del rumore anche durante l'addestramento della rete.\\
-L'addestramento verrà effettuato su un livello di rumore pari a \(0.5\) e poi verrà testata l'affidabilità sul test set con 10 livelli di rumore.\\
-Dal test, emerge quanto successivamente mostrato:
+A seguire è stato effettuato anche un test su tutte le reti e su del rumore crescente per definire la resistenza al rumore. Di seguito i risultati:
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.50\textwidth]{Rumore_Conv_Add.png}
+    \includegraphics[width=\textwidth]{RisultatiRumoreClassica.png}
 \end{figure}
 
-\subsection{Risultati}
-Dai precedenti test, si può concludere che, su questo tipo di dataset e con i parametri preimpostati, su di un addestramento di 15 cicli, le due varianti di MLP si assomigliano, non mostrando grandi differenze nell'accuratezza sul test set. I risultati migliori si ottengono addestrando la variante convoluzionale con del rumore.
+\subsection{Inizializzazione delle MLP --- Versione Convoluzionale}
+Si passa poi alle MLP convoluzionali. Di queste ne sono state create 6 diverse versioni, di seguito descrite:
+\begin{itemize}
+    \item \textbf{Conv2\_1428}: MLP composta da 2 strati convoluzionali rispettivamente con kernel \(3*3\) e \(4*4\), formata da 14 e 28 filtri, il tutto seguito da uno strato di pooling e infine da uno stato \textit{dense} di 10 unità;
+    \item \textbf{Conv3\_142822}: MLP composta da 3 strati convoluzionali rispettivamente con kernel \(3*3\), \(4*4\) e \(4*4\), formata da 14, 28 e 22 filtri, il tutto seguito da uno strato di pooling e infine da uno stato \textit{dense} di 10 unità;
+    \item \textbf{Conv10\_15}: MLP composta da 10 strati convoluzionali con kernel \(3*3\) formata da 15 filtri, il tutto seguito da uno strato di pooling e infine uno strato \textit{dense} di 10 unità; 
+    \item \textbf{Conv5\_1428223050}: MLP composta da 5 strati convoluzionali rispettivamente con kernel \(3*3\), \(4*4\), \(5*5\), \(6*6\) e \(7*7\), formata da 14, 28, 22, 30 e 50 filtri, il tutto seguito da uno strato di pooling e infine da uno stato \textit{dense} di 10 unità;
+    \item \textbf{Conv5\_1428405260}: MLP composta da 5 strati convoluzionali rispettivamente con kernel \(3*3\), \(4*4\), \(5*5\), \(6*6\) e \(7*7\), formata da 14, 28, 40, 52 e 60 filtri, il tutto seguito da uno strato di pooling e infine da uno stato \textit{dense} di 10 unità;
+    \item \textbf{Conv1\_28}: MLP composta da un singolo strato convoluzionale formato da un kernel \(4*4\) da 28 filtri, seguito dallo strato di pooling e infine da uno strato \textit{dense} di 10 unità
+\end{itemize}
+
+Anche in questo caso, dato l'addestramento di 5 cicli, le reti non convergono. Di seguito la curva di apprendimento e l'accuratezza prevista delle reti:
+\begin{figure}[H]
+    \centering 
+    \includegraphics[width=.9\textwidth]{ConfrontoConvoluzionale.png}
+\end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{AccuratezzaConvoluzionale.png}
+\end{figure}
+
+A seguire è stato effettuato anche un test su tutte le reti e su del rumore crescente per definire la resistenza al rumore. Di seguito i risultati:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{RisultatiRumoreConvoluzionale.png}
+\end{figure}
+
+\newpage
+\subsection{Confronto tra Varianti}
+Di seguito viene riportato il grafico che rappresenta il confronto tra tutte le MLP create:
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{ConfrontoTotale.png}
+\end{figure}
 
 \newpage
 \section{Primo Quesito --- Numeri Difficili da Riconoscere}
@@ -218,7 +241,7 @@ Di seguito alcuni esempi di \(9\) classificati erroneamente:
 
 \subsection{Aggiunta di Rumore in Pattern Corretti}
 Per procedere con il quesito, prima di aggiungere del rumore, creiamo due nuove liste che conterranno le immagini e i target delle immagini che la rete ha classificato correttamente.\\
-Il test è stato eseguito rumore crescente. La rete sarà considerata "affidabile" sino a quando il rateo di \textit{true positive} sarà maggiore del \(75\%\).\\
+Il test è stato eseguito su rumori crescenti. La rete sarà considerata "affidabile" sino a quando il rateo di \textit{true positive} sarà maggiore del \(75\%\).\\
 Per quanto riguarda la variante classica, la variazione dell'accuratezza risulta essere:
 \begin{figure}[H]
     \centering
@@ -389,9 +412,9 @@ Di conseguenza, i due rumori che massimizzano la resa della rete sono \(0.1\) e 
 \newpage
 \section{Terzo Quesito --- Variazione dell'Accuratezza su Pattern di Addestramento Ridotto}
 \paragraph{Warning: }Dato che i dataset sono estremamente ristretti, si utilizzerà nuovamente un addestramento di 15 cicli.
-\paragraph{Warning: }Per mostrare al meglio la variazione dell'accuratezza al diminuire del set di training, si suddividerà il quesito in 3 parti.
+\paragraph{Warning: }Per mostrare al meglio la variazione dell'accuratezza al diminuire del set di training, si suddividerà il quesito in 3 fasi.
 \\
-Prima di tutto, si divide il training set in 3 parti, una da 30.000 elementi, un altra da 15.000 e l'ultima da 6.000. Da notare che crescendo di dimensione, ogni train set contiene anche tutto il set di addestramento della dimensione precedente. \\
+Prima di tutto, si suddividerà il training set in 3 parti, una da 30.000 elementi, un altra da 15.000 e l'ultima da 6.000. Da notare che crescendo di dimensione, ogni train set contiene anche tutto il set di addestramento della dimensione precedente. \\
 Come per il quesito 2, verranno create 3 diverse MLP per evitare che l'addestramento multiplo falsifichi i risultati nel test.
 \subsection{50\% del Training Set}
 Dopo l'addestramento la curva dell'apprendimento risulta essere
