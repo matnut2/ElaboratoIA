@@ -164,6 +164,7 @@ Per quanto riguarda invece le MLP convoluzionali, c'è da notare che globalmente
 \newpage
 \section{Primo Quesito --- Numeri Difficili da Riconoscere}
 \subsection{Visualizzazione di Pattern Erronei}
+\paragraph{Warning:} da questo momento, e per la risoluzione di tutti i quesiti, si utilizzeranno MLP diverse (e possibilmente minori di numero) rispetto a quelle utilizzate nel report, ma che saranno addestrate nel primo e terzo quesito per un totale di 15 cicli. Di fatto verranno utilizzate sia versioni classiche che convoluzionali che rispecchiano l'affidabilità media per entrambe le classi, ossia \textit{MLP2HL500} e \textit{Conv2\_1428}, le quali sono state precedentemente descritte. \\\\ 
 Per poter visualizzare al meglio le previsioni sbagliate, utilizzeremo tre liste di supporto:
 \begin{itemize}
     \item sbagliate[]: contiene le "immagini" originali
@@ -219,7 +220,7 @@ Per quanto riguarda la variante convoluzionale, si è utilizzato lo stesso metod
     \centering
     \includegraphics[width=0.50\textwidth]{ErrateConv.png}
 \end{figure}
-A differenza di quanto visto prima, i numeri che vengono mal classificati per la maggiore sono i \(9\) che contano un numero di classificazioni errate pari a 22. Da notare come il numero di classificazioni errate sia molto minore rispetto alla variante classica.\\
+A differenza di quanto visto prima, i numeri che vengono mal classificati per la maggiore sono i \(9\) che contano un numero di classificazioni errate pari a 22. Da notare come globalmente il numero di classificazioni errate sia molto minore rispetto alla variante classica.\\
 Di seguito alcuni esempi di \(9\) classificati erroneamente:
 
 \begin{figure}[H]
@@ -426,7 +427,7 @@ Di conseguenza, i due rumori che massimizzano la resa della rete sono \(0.1\) e 
 \newpage
 \section{Terzo Quesito --- Variazione dell'Accuratezza su Pattern di Addestramento Ridotto}
 \paragraph{Warning: }Dato che i dataset sono estremamente ristretti, si utilizzerà nuovamente un addestramento di 15 cicli.
-\paragraph{Warning: }Per mostrare al meglio la variazione dell'accuratezza al diminuire del set di training, si suddividerà il quesito in 3 fasi.
+\paragraph{Warning: }Per mostrare al meglio la variazione dell'accuratezza al diminuire del set di training, si suddividerà il quesito in 3 fasi.\\\\
 \\
 Prima di tutto, si suddividerà il training set in 3 parti, una da 30.000 elementi, un altra da 15.000 e l'ultima da 6.000. Da notare che crescendo di dimensione, ogni train set contiene anche tutto il set di addestramento della dimensione precedente. \\
 Come per il quesito 2, verranno create 3 diverse MLP per evitare che l'addestramento multiplo falsifichi i risultati nel test.
@@ -468,5 +469,21 @@ Procedendo poi con il test, l'accuratezza si attesta intorno al \(0.9503\) con r
     \centering
     \includegraphics[width=.5\textwidth]{Matrix10.png}
 \end{figure}
+
+In conclusione, la riduzione del \textit{training set} riduce di circa \(0.02\) l'accuratezza della rete. Risultato abbastanza sorprendente, in quanto si aumenta l'errore di una piccolissima quantità, ossia un \(2\%\).
+
+\newpage
+\section{Conclusioni}
+In conclusione, visti gli esiti dei vari quesiti, possiamo affermare che:
+\begin{itemize}
+    \item Globalmente, le MLP convoluzionali superano per affidabilità le MLP classiche;
+    \item Per le MLP classiche, i risultati migliori si ottengono con numero ideale di strati nascosti compreso nell'intervallo \([2, 5]\) e un numero di neuroni nell'intervallo \([250 , 500]\);
+    \item Per le MLP convoluzionali, i risultati migliori si ottengono con 5 strati convoluzionali e un numero di filtri e dimensione dei kernel relativamente crescenti;
+    \item Sul dataset fornito, per le MLP classiche il numero classificato in modo errato più volte è il numero "8", mentre per le varianti convoluzionali è il "9". Quando si aggiunge rumore, il tasso di errore della variante convoluzionale rimane stabile mentre per la versione classica aumenta esponenzialmente;
+    \item I valori di rumore che massimizzano la resa della MLP sono \(0.2\) e \(0.5\);
+    \item Anche riducendo drasticamente il \textit{training set}, l'accuratezza rimane stabile al di sopra dello \(0.9\)
+\end{itemize}
+
+Ci tengo a segnalare che lo studio non risulta completo, in quanto, per avere dei risultati solidi, bisognerebbe utilizzare molti altri tipi di MLP, con diversi tassi di \textit{learning rate}, diversi risolutori, diversi cicli di addestramento, allenamenti su più rumori e diversi strati convoluzionali.
 
 \end{document}
