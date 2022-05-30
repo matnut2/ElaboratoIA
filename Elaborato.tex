@@ -60,7 +60,7 @@
 \begin{abstract}
 Nel presente elaborato verrà implementata una simulazione tramite modelli di reti neurali utilizzando l'ambiente di sviluppo Python.\\
 La simulazione si baserà sul database \textit{MNIST}, riguardante il riconoscimento di numeri manoscritti, fornitoci durante la terza esercitazione pratica.\\
-Dopo aver introdotto i vari tipi di rete e i loro risultati tramite un breve report, si cercherà rispondere a tre domande essenziali: definire le cifre più difficili da riconoscere, quantificare la variazione di accuratezza dovuta all'inserimento di rumore nel \textit{training pattern} e la variazione dell'accuratezza di riconoscimento sul \textit{testing pattern} riducendo drasticamente le dimensioni del \textit{training pattern}.    
+Dopo aver introdotto i vari tipi di rete e i loro risultati tramite un breve report, si cercherà di rispondere a tre quesiti essenziali: definire le cifre più difficili da riconoscere, quantificare la variazione di accuratezza dovuta all'inserimento di rumore nel \textit{training pattern} e la variazione dell'accuratezza di riconoscimento sul \textit{testing pattern} riducendo drasticamente le dimensioni del \textit{training pattern}.    
 \end{abstract}
 
 \newpage
@@ -80,7 +80,7 @@ Per lo sviluppo di questa simulazione, sono stati creati due notebook su \href{h
 
 \newpage
 \section{Analisi e Report --- Performance delle Reti}
-Prima di addentrarsi nei quesiti, si proverà ad analizzare varie MLP per capire quali possano essere le più performanti per il riconoscimento dei numeri.\\
+Prima di addentrarsi nei temi sopra citati, si proverà ad analizzare varie MLP per capire quali possano essere le più performanti per il riconoscimento dei numeri.\\
 \subsection{Inizializzazione delle MLP --- Versione Classica}
 Come prima cosa, sono state create 10 MLP classiche utilizzando la libreria \href{https://scikit-learn.org/stable/modules/generated/sklearn.neural_network.MLPClassifier.html#sklearn.neural_network.MLPClassifier}{\textit{sklearn.neural\_network}}, sotto meglio descritte:
 \begin{itemize}
@@ -93,9 +93,9 @@ Come prima cosa, sono state create 10 MLP classiche utilizzando la libreria \hre
     \item \textbf{MLP2HL250\_500}: MLP composta da 2 strati nascosti, contenenti rispettivamente 250 e 500 neuroni; 
     \item \textbf{MLP3HL250\_500\_1000}: MLP composta da 3 strati nascosti, contenenti rispettivamente 250, 500 e 1000 neuroni; 
     \item \textbf{MLP3HL1000\_500\_250}: MLP composta da 3 strati nascosti, contenenti rispettivamente 1000, 500 e 250 neuroni; 
-    \item \textbf{MLP5HL100\_250\_500\_500\_500}: MLP composta da 5 strati nascosti, di cui i primi 2 strati contenenti rispettivamente 100 e 250 neuroni, mentre gli ultimi 3 saranno formati da 500 neuroni 
+    \item \textbf{MLP5HL100\_250\_500\_500\_500}: MLP composta da 5 strati nascosti, di cui i primi 2 strati contenenti rispettivamente 100 e 250 neuroni, mentre gli ultimi 3 saranno formati da 500 neuroni.
 \end{itemize}
-Tutte queste varianti utilizzano una funzione di attivazione "\href{https://it.wikipedia.org/wiki/Rettificatore_(reti_neurali)}{\textit{RELU}}", un risolutore basato su di un ottimizzatore \textit{gradient-based} denominato "\href{https://arxiv.org/abs/1412.6980}{\textit{adam}}" e un \textit{learning rate} costante di valore \(0.001\). \\
+Tutte queste varianti utilizzano una funzione di attivazione “\href{https://it.wikipedia.org/wiki/Rettificatore_(reti_neurali)}{\textit{RELU}}”, un risolutore basato su un ottimizzatore \textit{gradient-based} denominato “\href{https://arxiv.org/abs/1412.6980}{\textit{adam}}” e un \textit{learning rate} costante di valore \(0.001\). \\
 Queste MLP sono state addestrate per un periodo di 5 cicli sul training set. Nessuna di queste è riuscita a convergere, per questo ci viene restituito un \textit{warning}. \\
 Di seguito la curva di apprendimento delle varie reti messe a confronto, oltre all'accuratezza prevista:
 \begin{figure}[H]
@@ -121,9 +121,9 @@ Si passa poi alle MLP convoluzionali, generate tramite il pacchetto \href{https:
     \item \textbf{Conv10\_15}: MLP composta da 10 strati convoluzionali con kernel \(3*3\) formata da 15 filtri, il tutto seguito da uno strato di pooling e infine uno strato \textit{dense} di 10 unità; 
     \item \textbf{Conv5\_1428223050}: MLP composta da 5 strati convoluzionali rispettivamente con kernel \(3*3\), \(4*4\), \(5*5\), \(6*6\) e \(7*7\), formata da 14, 28, 22, 30 e 50 filtri, il tutto seguito da uno strato di pooling e infine da uno stato \textit{dense} di 10 unità;
     \item \textbf{Conv5\_1428405260}: MLP composta da 5 strati convoluzionali rispettivamente con kernel \(3*3\), \(4*4\), \(5*5\), \(6*6\) e \(7*7\), formata da 14, 28, 40, 52 e 60 filtri, il tutto seguito da uno strato di pooling e infine da uno stato \textit{dense} di 10 unità;
-    \item \textbf{Conv1\_28}: MLP composta da un singolo strato convoluzionale formato da un kernel \(4*4\) da 28 filtri, seguito dallo strato di pooling e infine da uno strato \textit{dense} di 10 unità
+    \item \textbf{Conv1\_28}: MLP composta da un singolo strato convoluzionale formato da un kernel \(4*4\) da 28 filtri, seguito dallo strato di pooling e infine da uno strato \textit{dense} di 10 unità.
 \end{itemize}
-Come descritto per la versione classica, anche la variante convoluzionale utilizza l'ottimizzatore "\href{https://arxiv.org/abs/1412.6980}{\textit{adam}}".\\
+Come descritto per la versione classica, anche la variante convoluzionale utilizza l'ottimizzatore “\href{https://arxiv.org/abs/1412.6980}{\textit{adam}}”.\\
 Analogamente alla versione classica, dato l'addestramento di 5 cicli, le reti non convergono. Di seguito la curva di apprendimento e l'accuratezza prevista delle reti:
 \begin{figure}[H]
     \centering 
@@ -134,7 +134,7 @@ Analogamente alla versione classica, dato l'addestramento di 5 cicli, le reti no
     \includegraphics[width=0.6\textwidth]{AccuratezzaConvoluzionale.png}
 \end{figure}
 
-A seguire è stato effettuato anche un test su tutte le reti e su del rumore crescente per definire la resistenza al rumore. Di seguito i risultati:
+Successivamente è stato effettuato un test su tutte le reti e su del rumore crescente per definire la resistenza al rumore. Di seguito i risultati:
 \begin{figure}[H]
     \centering
     \includegraphics[width=\textwidth]{RisultatiRumoreConvoluzionale.png}
@@ -150,24 +150,24 @@ Di seguito viene riportato il grafico che rappresenta il confronto tra tutte le 
 Analizzando i dati in nostro possesso, si può notare che, per le reti classiche, il numero ideale di strati nascosti deve essere compreso nell'intervallo \([2, 5]\) e che il numero di neuroni deve aggirarsi nell'intervallo \([250 , 500]\).
 Di conseguenza, possiamo affermare che le reti migliori siano:
 \begin{itemize}
-    \item \textbf{MLP5HL500} \(>\) accuratezza \(0.9798\)
-    \item \textbf{MLP2HL250\_500} \(>\) accuratezza \(0.9787\)
-    \item \textbf{MLP2HL500 \& MLP3HL500} \(>\) accuratezza \(0.9779\)
+    \item \textbf{MLP5HL500} \(>\) accuratezza \(0.9798\);
+    \item \textbf{MLP2HL250\_500} \(>\) accuratezza \(0.9787\);
+    \item \textbf{MLP2HL500 \& MLP3HL500} \(>\) accuratezza \(0.9779\).
 \end{itemize} 
 
-Per quanto riguarda invece le MLP convoluzionali, c'è da notare che globalmente surclassano l'accuratezza delle versioni classiche. Si sottolinea inoltre che le reti migliori sono risultate quelle con 5 strati convoluzionali e un numero di filtri e dimensione dei kernel relativamente crescenti. Di fatto le due migliori MLP risultano essere:
+Per quanto riguarda invece le MLP convoluzionali, si può notare che globalmente surclassano l'accuratezza delle versioni classiche. Si sottolinea inoltre che le reti migliori sono risultate quelle con 5 strati convoluzionali e un numero di filtri e dimensione dei kernel relativamente crescenti. Di fatto, le due migliori MLP risultano essere:
 \begin{itemize}
-    \item \textbf{Conv5\_1428405260} \(>\) accuratezza \(0.9900\)
-    \item \textbf{Conv5\_1428223050} \(>\) accuratezza \(0.9890\)
+    \item \textbf{Conv5\_1428405260} \(>\) accuratezza \(0.9900\);
+    \item \textbf{Conv5\_1428223050} \(>\) accuratezza \(0.9890\).
 \end{itemize}
 
 \newpage
 \section{Primo Quesito --- Numeri Difficili da Riconoscere}
 \subsection{Visualizzazione di Pattern Erronei}
-\paragraph{Warning:} da questo momento, e per la risoluzione di tutti i quesiti, si utilizzeranno MLP diverse (e possibilmente minori di numero) rispetto a quelle utilizzate nel report, ma che saranno addestrate nel primo e terzo quesito per un totale di 15 cicli. Di fatto verranno utilizzate sia versioni classiche che convoluzionali che rispecchiano l'affidabilità media per entrambe le classi, ossia \textit{MLP2HL500} e \textit{Conv2\_1428}, le quali sono state precedentemente descritte. \\\\ 
+\paragraph{Warning:} da questo momento, e per la risoluzione di tutti i quesiti, si utilizzeranno MLP diverse (e possibilmente minori di numero) rispetto a quelle utilizzate nel report, ma che saranno addestrate nel primo e terzo quesito, per un totale di 15 cicli. Di fatto verranno utilizzate sia versioni classiche che convoluzionali che rispecchiano l'affidabilità media per entrambe le classi, ossia \textit{MLP2HL500} e \textit{Conv2\_1428}, le quali sono state precedentemente descritte. \\\\ 
 Per poter visualizzare al meglio le previsioni sbagliate, utilizzeremo tre liste di supporto:
 \begin{itemize}
-    \item sbagliate[]: contiene le "immagini" originali
+    \item sbagliate[]: contiene le “immagini” originali
     \item previsto[]: contiene il valore previsto dalla rete
     \item target[]: contiene il valore target associato al valore originario
 \end{itemize}
@@ -179,8 +179,8 @@ Di seguito i risultati:
     \includegraphics[width=0.50\textwidth]{ErrateClassica.png}
 \end{figure}
 
-Nella simulazione risulta che il numero che viene classificato più volte erroneamente è \(8\), che conta un numero di classificazioni errate di \(47\). A seguire il numero \(7\) e poi il \(4\). I numeri che invece vengono classificati in modo sbagliato poche volte sono \(0\), \(1\) e \(9\).\\
-Di seguito alcuni esempi di numeri \(8\) che sono stati classificati in modo erroneo:
+Nella simulazione risulta che il numero classificato più volte erroneamente è \(8\), che conta un numero di classificazioni errate di \(47\). A seguire il numero \(7\) e poi il \(4\). I numeri che invece vengono classificati in modo sbagliato poche volte sono \(0\), \(1\) e \(9\).\\
+A supporto di quanto appena affermato, si riportano alcuni esempi di numeri \(8\) che sono stati classificati in modo erroneo:
 
 \begin{figure}[H]
     \centering
@@ -220,7 +220,7 @@ Per quanto riguarda la variante convoluzionale, si è utilizzato lo stesso metod
     \centering
     \includegraphics[width=0.50\textwidth]{ErrateConv.png}
 \end{figure}
-A differenza di quanto visto prima, i numeri che vengono mal classificati per la maggiore sono i \(9\) che contano un numero di classificazioni errate pari a 22. Da notare come globalmente il numero di classificazioni errate sia molto minore rispetto alla variante classica.\\
+A differenza di quanto visto prima, i numeri che vengono mal classificati per la maggiore sono i \(9\), i quali contano un numero di classificazioni errate pari a 22. Da notare come globalmente il numero di classificazioni errate sia notevolmente minore rispetto alla variante classica.\\
 Di seguito alcuni esempi di \(9\) classificati erroneamente:
 
 \begin{figure}[H]
@@ -256,24 +256,24 @@ Di seguito alcuni esempi di \(9\) classificati erroneamente:
 
 \subsection{Aggiunta di Rumore in Pattern Corretti}
 Per procedere con il quesito, prima di aggiungere del rumore, creiamo due nuove liste che conterranno le immagini e i target delle immagini che la rete ha classificato correttamente.\\
-Il test è stato eseguito su rumori crescenti. La rete sarà considerata "affidabile" sino a quando il rateo di \textit{true positive} sarà maggiore del \(75\%\).\\
+Il test è stato eseguito su rumori crescenti. La rete sarà considerata “affidabile” sino a quando il rateo di \textit{true positive} sarà maggiore del \(75\%\).\\
 Per quanto riguarda la variante classica, la variazione dell'accuratezza risulta essere:
 \begin{figure}[H]
     \centering
     \includegraphics[width=0.50\textwidth]{TPClassica.png}    
 \end{figure}
-In linea con quanto precedentemente detto, la rete sarà considerabile come affidabile finché il rumore sarà compreso tra i valori \([0.0, 0.3]\), estremi compresi.\\
+In linea con quanto precedentemente detto, la rete sarà considerabile come affidabile finché il rumore sarà compreso nell'intervallo \([0.0, 0.3]\), estremi compresi.\\
 Di seguito alcuni esempi di valori classificati in modo errato:
 
 \begin{figure}[H]
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \caption{Target: 7 - Previsto: 3}
+        \caption{Target: 7 --- Previsto: 3}
         \includegraphics[width=0.5\textwidth]{ErrClass1.png}
     \end{subfigure}
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \caption{Target: 0 - Previsto: 5}
+        \caption{Target: 0 --- Previsto: 5}
         \includegraphics[width=0.5\textwidth]{ErrClass2.png}
     \end{subfigure}
 \end{figure}
@@ -281,19 +281,19 @@ Di seguito alcuni esempi di valori classificati in modo errato:
 \begin{figure}[H]
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \caption{Target: 6 - Previsto: 5}
+        \caption{Target: 6 --- Previsto: 5}
         \includegraphics[width=0.5\textwidth]{ErrClass3.png}
     \end{subfigure}
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \caption{Target: 1 - Previsto: 2}
+        \caption{Target: 1 --- Previsto: 2}
         \includegraphics[width=0.5\textwidth]{ErrClass4.png}
     \end{subfigure}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \caption{Target: 1 - Previsto: 5}
+    \caption{Target: 1 --- Previsto: 5}
     \includegraphics[width=0.25\textwidth]{ErrClass5.png}
 \end{figure}
 
@@ -308,12 +308,12 @@ Di seguito alcuni esempi di valori classificati erroneamente:
 \begin{figure}[H]
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \caption{Target: 3 - Previsto: 9}
+        \caption{Target: 3 --- Previsto: 9}
         \includegraphics[width=0.5\textwidth]{ErrConv1.png}
     \end{subfigure}
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \caption{Target: 0 - Previsto: 3}
+        \caption{Target: 0 --- Previsto: 3}
         \includegraphics[width=0.5\textwidth]{ErrConv2.png}
     \end{subfigure}
 \end{figure}
@@ -321,25 +321,25 @@ Di seguito alcuni esempi di valori classificati erroneamente:
 \begin{figure}[H]
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \caption{Target: 1 - Previsto: 2}
+        \caption{Target: 1 --- Previsto: 2}
         \includegraphics[width=0.5\textwidth]{ErrConv3.png}
     \end{subfigure}
     \begin{subfigure}{0.5\textwidth}
         \centering
-        \caption{Target: 0 - Previsto: 2}
+        \caption{Target: 0 --- Previsto: 2}
         \includegraphics[width=0.5\textwidth]{ErrConv4.png}
     \end{subfigure}
 \end{figure}
 
 \begin{figure}[H]
     \centering
-    \caption{Target: 8 - Previsto: 9}
+    \caption{Target: 8 --- Previsto: 9}
     \includegraphics[width=0.25\textwidth]{ErrConv5.png}
 \end{figure}
 
 \newpage
 \section{Secondo Quesito --- Variazione dell'Accuratezza su Addestramento Rumoroso}
-\paragraph{Warning:} Dato che nella sezione saranno definite molte MLP, onde evitare tempi di attesa troppo lunghi, le iterazioni massime sono state ridotte da 15 a 5. La necessità di creare nuove MLP è data dal fatto che il sovrapporsi di addestramenti sulla stessa rete potrebbe influire positivamente sulla predizione e creare di conseguenza dei falsi positivi dato che non si saprà quale degli addestramenti ha massimizzato la resa.
+\paragraph{Warning:} Dato che nella sezione saranno definite molte MLP, onde evitare tempi di attesa troppo lunghi, le iterazioni massime sono state ridotte da 15 a 5. La necessità di creare nuove MLP è data dal fatto che il sovrapporsi di addestramenti sulla stessa rete potrebbe influire positivamente sulla predizione, e creare di conseguenza dei falsi positivi, dato che non si saprà quale degli addestramenti ha massimizzato la resa.
 \subsection{Accuratezza su di un Pattern di Test dopo Addestramento Rumoroso}
 Prima di tutto, verranno inizializzate 10 MLP, ognuna delle quali sarà addestrata per un singolo e diverso rumore. Di seguito le curve di apprendimento delle reti:
 \begin{figure}[H]
@@ -410,16 +410,16 @@ Prima di tutto, verranno inizializzate 10 MLP, ognuna delle quali sarà addestra
 \subsection{Definizione di un Valore di Rumorosità Ottimale}
 Allo stato attuale, l'accuratezza della MPL classica al variare del rumore risulta:
 \begin{itemize}
-    \item Rumore 0.1: 0.6258
-    \item Rumore 0.2: 0.5855
-    \item Rumore 0.3: 0.5847
-    \item Rumore 0.4: 0.5826
-    \item Rumore 0.5: 0.6005
-    \item Rumore 0.6: 0.4644
-    \item Rumore 0.7: 0.4529
-    \item Rumore 0.8: 0.4305
-    \item Rumore 0.9: 0.4958
-    \item Rumore 1.0: 0.4208
+    \item Rumore 0.1: 0.6258;
+    \item Rumore 0.2: 0.5855;
+    \item Rumore 0.3: 0.5847;
+    \item Rumore 0.4: 0.5826;
+    \item Rumore 0.5: 0.6005;
+    \item Rumore 0.6: 0.4644;
+    \item Rumore 0.7: 0.4529;
+    \item Rumore 0.8: 0.4305;
+    \item Rumore 0.9: 0.4958;
+    \item Rumore 1.0: 0.4208.
 \end{itemize}
 
 Di conseguenza, i due rumori che massimizzano la resa della rete sono \(0.1\) e \(0.5\).
@@ -445,7 +445,7 @@ Procedendo poi con il test, l'accuratezza si attesta intorno al \(0.9773\) con r
 \end{figure}
 
 \subsection{25\% del Training Set}
-Dopo l'addestramento la curva dell'apprendimento risulta essere
+A seguito dell'addestramento, la curva dell'apprendimento risulta essere
 \begin{figure}[H]
     \centering
     \includegraphics[width=.5\textwidth]{Set25.png}
@@ -464,13 +464,13 @@ Dopo l'addestramento la curva dell'apprendimento risulta essere
     \includegraphics[width=.5\textwidth]{Set10.png}
 \end{figure}
 
-Procedendo poi con il test, l'accuratezza si attesta intorno al \(0.9503\) con relativa matrice di confusione:
+Proseguendo con il test, l'accuratezza si attesta intorno al \(0.9503\) con relativa matrice di confusione:
 \begin{figure}[H]
     \centering
     \includegraphics[width=.5\textwidth]{Matrix10.png}
 \end{figure}
 
-In conclusione, la riduzione del \textit{training set} riduce di circa \(0.02\) l'accuratezza della rete. Risultato abbastanza sorprendente, in quanto si aumenta l'errore di una piccolissima quantità, ossia un \(2\%\).
+In conclusione, la riduzione del \textit{training set} riduce di circa \(0.02\) l'accuratezza della rete. Risultato abbastanza sorprendente, in quanto si aumenta l'errore di una piccolissima quantità pari a \(2\%\).
 
 \newpage
 \section{Conclusioni}
@@ -479,7 +479,7 @@ In conclusione, visti gli esiti dei vari quesiti, possiamo affermare che:
     \item Globalmente, le MLP convoluzionali superano per affidabilità le MLP classiche;
     \item Per le MLP classiche, i risultati migliori si ottengono con numero ideale di strati nascosti compreso nell'intervallo \([2, 5]\) e un numero di neuroni nell'intervallo \([250 , 500]\);
     \item Per le MLP convoluzionali, i risultati migliori si ottengono con 5 strati convoluzionali e un numero di filtri e dimensione dei kernel relativamente crescenti;
-    \item Sul dataset fornito, per le MLP classiche il numero classificato in modo errato più volte è il numero "8", mentre per le varianti convoluzionali è il "9". Quando si aggiunge rumore, il tasso di errore della variante convoluzionale rimane stabile mentre per la versione classica aumenta esponenzialmente;
+    \item Sul dataset fornito, per le MLP classiche il numero classificato in modo errato più volte è il numero \(8\), mentre per le varianti convoluzionali è il \(9\). Quando si aggiunge rumore, il tasso di errore della variante convoluzionale rimane stabile mentre per la versione classica aumenta esponenzialmente;
     \item I valori di rumore che massimizzano la resa della MLP sono \(0.2\) e \(0.5\);
     \item Anche riducendo drasticamente il \textit{training set}, l'accuratezza rimane stabile al di sopra dello \(0.9\)
 \end{itemize}
@@ -487,3 +487,4 @@ In conclusione, visti gli esiti dei vari quesiti, possiamo affermare che:
 Ci tengo a segnalare che lo studio non risulta completo, in quanto, per avere dei risultati solidi, bisognerebbe utilizzare molti altri tipi di MLP, con diversi tassi di \textit{learning rate}, diversi risolutori, diversi cicli di addestramento, allenamenti su più rumori e diversi strati convoluzionali.
 
 \end{document}
+“”
